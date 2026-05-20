@@ -6,8 +6,12 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import toast from "react-hot-toast";
 import { FaEnvelope, FaLock, FaUser, FaImage, FaEye, FaEyeSlash } from "react-icons/fa";
+import { authClient } from "@/lib/auth-client";
+import useTitle from "@/hook/useTitle";
 
 export default function RegisterPage() {
+
+  useTitle("Register");
   const { register } = useAuth();
   const router = useRouter();
   const [formData, setFormData] = useState({
@@ -43,6 +47,17 @@ export default function RegisterPage() {
     }
   };
 
+  const handleGoogleLogin = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: "google",
+        callbackURL: "/",
+      });
+    } catch (error) {
+      toast.error("Google login failed!");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 to-indigo-100 flex items-center justify-center px-4">
       <div className="bg-white rounded-3xl shadow-xl p-8 w-full max-w-md">
@@ -66,6 +81,7 @@ export default function RegisterPage() {
                 value={formData.name}
                 onChange={handleChange}
                 placeholder="Enter your name"
+                autoComplete="off"
                 className="w-full border border-gray-300 rounded-xl pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             </div>
@@ -82,6 +98,7 @@ export default function RegisterPage() {
                 value={formData.email}
                 onChange={handleChange}
                 placeholder="Enter your email"
+                autoComplete="off"
                 className="w-full border border-gray-300 rounded-xl pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             </div>
@@ -98,6 +115,7 @@ export default function RegisterPage() {
                 value={formData.photoURL}
                 onChange={handleChange}
                 placeholder="Enter photo URL"
+                autoComplete="off"
                 className="w-full border border-gray-300 rounded-xl pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
             </div>
@@ -114,6 +132,7 @@ export default function RegisterPage() {
                 value={formData.password}
                 onChange={handleChange}
                 placeholder="Min 6 chars, uppercase & lowercase"
+                autoComplete="new-password"
                 className="w-full border border-gray-300 rounded-xl pl-10 pr-10 py-2 focus:outline-none focus:ring-2 focus:ring-purple-400"
               />
               <button
@@ -148,7 +167,11 @@ export default function RegisterPage() {
           </div>
 
           {/* Google */}
-          <button className="w-full border border-gray-300 py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-50 transition">
+          <button
+            onClick={handleGoogleLogin}
+            type="button"
+            className="w-full border border-gray-300 py-2.5 rounded-xl flex items-center justify-center gap-2 hover:bg-gray-50 transition"
+          >
             <img src="https://www.google.com/favicon.ico" alt="google" className="w-5 h-5" />
             <span className="font-medium text-gray-700">Continue with Google</span>
           </button>

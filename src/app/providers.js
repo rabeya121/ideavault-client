@@ -2,14 +2,16 @@
 
 import { RouterProvider } from "@heroui/react";
 import { AuthProvider } from "@/context/AuthContext";
-
+import { ThemeProvider } from "next-themes";
 
 export default function Providers({ children }) {
   return (
-    <AuthProvider>
+    <ThemeProvider attribute="class" defaultTheme="light">
       <RouterProvider>
-        {children}
+        <AuthProvider>
+          {children}
+        </AuthProvider>
       </RouterProvider>
-    </AuthProvider>
+    </ThemeProvider>
   );
 }
