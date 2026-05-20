@@ -47,7 +47,7 @@ export default function Navbar() {
   const linkClass = (path) =>
     `font-medium transition pb-1 ${
       isActive(path)
-        ? "text-purple-600 border-b-2 border-purple-600"
+        ? "text-purple-600  border-purple-600"
         : "text-gray-700 hover:text-purple-600"
     }`;
 
