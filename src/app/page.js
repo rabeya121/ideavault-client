@@ -80,7 +80,7 @@ export default function Home() {
   return (
     <div className="bg-gray-50 min-h-screen">
 
-      {/* Banner Slider */}
+      {/* swiper Slider */}
       <Swiper
         modules={[Autoplay, Pagination, Navigation]}
         autoplay={{ delay: 4500, disableOnInteraction: false }}
@@ -128,6 +128,7 @@ export default function Home() {
           </SwiperSlide>
         ))}
       </Swiper>
+
       {/* Trending Ideas Section */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         <div className="text-center mb-10">
@@ -201,8 +202,8 @@ export default function Home() {
         </div>
       </section>
 
-      
-      {/* Extra Section 2 - Categories */}
+
+      {/* Categories */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
@@ -230,7 +231,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Extra Section 3 - Top Contributors */}
+      {/* Top Contributors */}
       <section className="py-16 px-4 bg-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
