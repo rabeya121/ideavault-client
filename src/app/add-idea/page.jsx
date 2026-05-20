@@ -47,7 +47,7 @@ export default function AddIdeaPage() {
         authorEmail: user.email,
         authorName: user.name,
       };
-      await axios.post("http://localhost:8000/api/ideas", data, { withCredentials: true });
+      await axios.post(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/ideas`, data, { withCredentials: true });
       toast.success("Idea submitted successfully!");
       router.push("/my-ideas");
     } catch (error) {

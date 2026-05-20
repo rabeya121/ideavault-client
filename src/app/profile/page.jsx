@@ -22,7 +22,7 @@ export default function ProfilePage() {
     setLoading(true);
     try {
       const res = await axios.put(
-        `http://localhost:8000/api/auth/update-profile`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/update-profile`,
         formData,
         { withCredentials: true },
       );

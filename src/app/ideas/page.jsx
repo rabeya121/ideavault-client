@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
@@ -35,7 +36,7 @@ function IdeasContent() {
     // ✅ এখানে
     setLoading(true);
     try {
-      let url = "http://localhost:8000/api/ideas?";
+      let url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/ideas?`;
       if (searchText) url += `search=${searchText}&`;
       if (cat && cat !== "All") url += `category=${cat}&`;
       if (dateFilter) url += `date=${dateFilter}`;
@@ -221,3 +222,4 @@ export default function IdeasPage() {
     </Suspense>
   );
 }
+

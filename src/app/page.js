@@ -67,12 +67,12 @@ export default function Home() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8000/api/ideas/trending")
+      .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/ideas/trending`)
       .then((res) => setTrendingIdeas(res.data))
       .catch(console.error);
 
     axios
-      .get("http://localhost:8000/api/auth/top-contributors")
+      .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/top-contributors`)
       .then((res) => setContributors(res.data))
       .catch(console.error);
   }, []);

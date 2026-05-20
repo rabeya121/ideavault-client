@@ -1,3 +1,4 @@
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -14,7 +15,7 @@ export default function IdeaDetailsPage() {
   useTitle("Idea Details");
 
   const { id } = useParams();
-  const { user } = useAuth();
+  const { user, getToken } = useAuth(); // ← getToken add করো
   const [idea, setIdea] = useState(null);
   const [comments, setComments] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -24,7 +25,7 @@ export default function IdeaDetailsPage() {
 
   const fetchIdea = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/ideas/${id}`);
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/ideas/${id}`);
       setIdea(res.data);
     } catch (error) {
       console.error(error);
@@ -33,7 +34,7 @@ export default function IdeaDetailsPage() {
 
   const fetchComments = async () => {
     try {
-      const res = await axios.get(`http://localhost:8000/api/comments/${id}`);
+      const res = await axios.get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/comments/${id}`);
       setComments(res.data);
     } catch (error) {
       console.error(error);
@@ -53,10 +54,14 @@ export default function IdeaDetailsPage() {
       return;
     }
     try {
+      const token = await getToken(); // ← token নাও
       await axios.post(
-        "http://localhost:8000/api/comments",
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comments`,
         { ideaId: id, userEmail: user.email, userName: user.name, text: commentText },
-        { withCredentials: true }
+        {
+          headers: { Authorization: `Bearer ${token}` }, // ← add করো
+          withCredentials: true
+        }
       );
       toast.success("Comment added!");
       setCommentText("");
@@ -68,7 +73,14 @@ export default function IdeaDetailsPage() {
 
   const handleDeleteComment = async (commentId) => {
     try {
-      await axios.delete(`http://localhost:8000/api/comments/${commentId}`, { withCredentials: true });
+      const token = await getToken(); // ← token নাও
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comments/${commentId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` }, // ← add করো
+          withCredentials: true
+        }
+      );
       toast.success("Comment deleted!");
       fetchComments();
     } catch (error) {
@@ -78,10 +90,14 @@ export default function IdeaDetailsPage() {
 
   const handleEditComment = async (commentId) => {
     try {
+      const token = await getToken(); // ← token নাও
       await axios.put(
-        `http://localhost:8000/api/comments/${commentId}`,
+        `/api/comments/${commentId}`,
         { text: editText },
-        { withCredentials: true }
+        {
+          headers: { Authorization: `Bearer ${token}` }, // ← add করো
+          withCredentials: true
+        }
       );
       toast.success("Comment updated!");
       setEditingComment(null);

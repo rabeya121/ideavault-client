@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
+import { authClient } from "@/lib/auth-client";
 
 const AuthContext = createContext(null);
 
@@ -9,7 +10,8 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 
-  const API = "http://localhost:8000/api";
+  const API = `${process.env.NEXT_PUBLIC_SERVER_URL}/api`;
+
 
   // Check if user is logged in
   useEffect(() => {
@@ -31,7 +33,7 @@ export function AuthProvider({ children }) {
     const res = await axios.post(
       `${API}/auth/register`,
       { name, email, password, photoURL },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     setUser(res.data.user);
     return res.data;
@@ -42,7 +44,7 @@ export function AuthProvider({ children }) {
     const res = await axios.post(
       `${API}/auth/login`,
       { email, password },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     setUser(res.data.user);
     return res.data;
@@ -50,11 +52,9 @@ export function AuthProvider({ children }) {
 
   // Google Login
   const googleLogin = async (userData) => {
-    const res = await axios.post(
-      `${API}/auth/google-login`,
-      userData,
-      { withCredentials: true }
-    );
+    const res = await axios.post(`${API}/auth/google-login`, userData, {
+      withCredentials: true,
+    });
     setUser(res.data.user);
     return res.data;
   };
@@ -65,8 +65,19 @@ export function AuthProvider({ children }) {
     setUser(null);
   };
 
+    const getToken = async () => {
+    try {
+      const session = await authClient.getSession();
+      return session?.data?.token || null;
+    } catch {
+      return null;
+    }
+  };
+
   return (
-    <AuthContext.Provider value={{ user, setUser, loading, register, login, googleLogin, logout }}>
+    <AuthContext.Provider
+      value={{ user, setUser, loading, register, login, googleLogin, logout, getToken }}
+    >
       {children}
     </AuthContext.Provider>
   );

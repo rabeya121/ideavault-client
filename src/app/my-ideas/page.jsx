@@ -25,7 +25,7 @@ export default function MyIdeasPage() {
   const fetchMyIdeas = async () => {
     try {
       const res = await axios.get(
-        `http://localhost:8000/api/ideas/user/${user.email}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/ideas/user/${user.email}`,
         { withCredentials: true }
       );
       setIdeas(res.data);
@@ -42,7 +42,7 @@ export default function MyIdeasPage() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8000/api/ideas/${id}`, { withCredentials: true });
+      await axios.delete(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/ideas/${id}`, { withCredentials: true });
       toast.success("Idea deleted!");
       setDeleteModal(null);
       fetchMyIdeas();
@@ -54,7 +54,7 @@ export default function MyIdeasPage() {
   const handleUpdate = async () => {
     try {
       await axios.put(
-        `http://localhost:8000/api/ideas/${editModal}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/ideas/${editModal}`,
         editData,
         { withCredentials: true }
       );

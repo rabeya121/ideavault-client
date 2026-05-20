@@ -1,86 +1,3 @@
-// "use client";
-
-// import { useEffect, useState } from "react";
-// import axios from "axios";
-// import { useAuth } from "@/context/AuthContext";
-// import PrivateRoute from "@/components/PrivateRoute";
-// import LoadingSpinner from "@/components/LoadingSpinner";
-// import Link from "next/link";
-// import { FaComment, FaClock, FaLightbulb } from "react-icons/fa";
-// import useTitle from "@/hook/useTitle";
-
-// export default function MyInteractionsPage() {
-//   useTitle("My Interactions");
-//   const { user } = useAuth();
-//   const [comments, setComments] = useState([]);
-//   const [loading, setLoading] = useState(true);
-
-//   useEffect(() => {
-//     if (user) {
-//       axios
-//         .get(`http://localhost:8000/api/comments/user/${user.email}`, { withCredentials: true })
-//         .then((res) => setComments(res.data))
-//         .catch(console.error)
-//         .finally(() => setLoading(false));
-//     }
-//   }, [user]);
-
-//   return (
-//     <PrivateRoute>
-//       <div className="min-h-screen bg-gray-50 py-10 px-4">
-//         <div className="max-w-4xl mx-auto">
-
-//           {/* Header */}
-//           <div className="text-center mb-10">
-//             <h1 className="text-4xl font-bold text-gray-800 mb-2">🤝 My Interactions</h1>
-//             <p className="text-gray-500">Ideas you have commented on</p>
-//           </div>
-
-//           {loading ? (
-//             <LoadingSpinner />
-//           ) : comments.length === 0 ? (
-//             <div className="text-center py-20">
-//               <p className="text-6xl mb-4">💬</p>
-//               <p className="text-gray-500 text-xl mb-4">No interactions yet!</p>
-//               <Link href="/ideas" className="bg-purple-600 text-white px-6 py-2 rounded-xl hover:bg-purple-700">
-//                 Explore Ideas
-//               </Link>
-//             </div>
-//           ) : (
-//             <div className="space-y-4">
-//               {comments.map((comment) => (
-//                 <div key={comment._id} className="bg-white rounded-2xl shadow p-6 flex gap-4">
-//                   {/* Icon */}
-//                   <div className="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center flex-shrink-0">
-//                     <FaComment className="text-purple-600 text-lg" />
-//                   </div>
-
-//                   {/* Content */}
-//                   <div className="flex-1">
-//                     <div className="flex items-center justify-between mb-2">
-//                       <span className="flex items-center gap-2 text-sm text-gray-500">
-//                         <FaClock className="text-xs" />
-//                         {new Date(comment.createdAt).toLocaleDateString()}
-//                       </span>
-//                       <Link
-//                         href={`/ideas/${comment.ideaId}`}
-//                         className="flex items-center gap-1 text-purple-600 text-sm font-medium hover:underline"
-//                       >
-//                         <FaLightbulb /> View Idea
-//                       </Link>
-//                     </div>
-//                     <p className="text-gray-700">{comment.text}</p>
-//                   </div>
-//                 </div>
-//               ))}
-//             </div>
-//           )}
-
-//         </div>
-//       </div>
-//     </PrivateRoute>
-//   );
-// }
 
 "use client";
 
@@ -102,7 +19,7 @@ export default function MyInteractionsPage() {
   useEffect(() => {
     if (user) {
       axios
-        .get(`http://localhost:8000/api/comments/user/${user.email}`, {
+        .get(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/comments/user/${user.email}`, {
           withCredentials: true,
         })
         .then(async (res) => {
@@ -113,7 +30,7 @@ export default function MyInteractionsPage() {
             commentsData.map(async (comment) => {
               try {
                 const ideaRes = await axios.get(
-                  `http://localhost:8000/api/ideas/${comment.ideaId}`,
+                  `${process.env.NEXT_PUBLIC_SERVER_URL}/api/ideas/${comment.ideaId}`,
                 );
                 return { ...comment, ideaTitle: ideaRes.data.title };
               } catch {
