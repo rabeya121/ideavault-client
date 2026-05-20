@@ -25,7 +25,6 @@ export default function MyInteractionsPage() {
         .then(async (res) => {
           const commentsData = res.data;
 
-          // প্রতিটা comment এর জন্য idea title নিয়ে আসি
           const enriched = await Promise.all(
             commentsData.map(async (comment) => {
               try {
@@ -49,7 +48,7 @@ export default function MyInteractionsPage() {
     <PrivateRoute>
       <div className="min-h-screen bg-gray-50 dark:bg-gray-900 py-10 px-4">
         <div className="max-w-4xl mx-auto">
-          {/* Header */}
+          
           <div className="text-center mb-10">
             <h1 className="text-4xl font-bold text-gray-800 dark:text-white mb-2">
               🤝 My Interactions
@@ -86,7 +85,7 @@ export default function MyInteractionsPage() {
                   key={comment._id}
                   className="bg-white dark:bg-gray-800 rounded-2xl shadow hover:shadow-md transition overflow-hidden"
                 >
-                  {/* Idea Title Header */}
+
                   <div className="bg-purple-50 dark:bg-gray-700 px-6 py-4 flex items-center justify-between">
                     <span className="font-bold text-purple-700 dark:text-purple-300 text-lg">
                       {comment.ideaTitle}
@@ -99,7 +98,6 @@ export default function MyInteractionsPage() {
                     </Link>
                   </div>
 
-                  {/* Comment Content */}
                   <div className="px-6 py-5 flex gap-4">
                     <img
                       src={`https://ui-avatars.com/api/?name=${user?.name}&background=7c3aed&color=fff`}

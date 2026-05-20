@@ -33,7 +33,7 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-2">
               <FaMapMarkerAlt className="text-gray-400" />
-              Dhaka, Bangladesh
+              North Ibrahimpur, Dhaka, Bangladesh
             </li>
             <li className="flex gap-4 mt-2 items-center">
 
