@@ -165,7 +165,8 @@ export default function MyIdeasPage() {
         </div>
       )}
 
-      {/* Edit Modal */}
+
+      {/* Modal */}
       {editModal && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
           <div className="bg-white rounded-2xl p-8 max-w-lg w-full shadow-xl max-h-[90vh] overflow-y-auto">
