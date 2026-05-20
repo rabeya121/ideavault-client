@@ -128,7 +128,6 @@ export default function Home() {
           </SwiperSlide>
         ))}
       </Swiper>
-
       {/* Trending Ideas Section */}
       <section className="max-w-7xl mx-auto px-4 py-16">
         <div className="text-center mb-10">
@@ -202,6 +201,7 @@ export default function Home() {
         </div>
       </section>
 
+      
       {/* Extra Section 2 - Categories */}
       <section className="py-16 px-4">
         <div className="max-w-7xl mx-auto">
