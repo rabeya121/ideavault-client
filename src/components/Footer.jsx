@@ -26,7 +26,6 @@ export default function Footer() {
 
         <div>
           <h3 className="text-white font-semibold mb-3">Contact</h3>
-
           <ul className="space-y-3 text-sm">
             <li className="flex items-center gap-2">
               <FaEnvelope className="text-gray-400" />
