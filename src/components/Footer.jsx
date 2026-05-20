@@ -5,7 +5,7 @@ export default function Footer() {
     <footer className="bg-gray-900 text-gray-300 mt-auto">
       <div className="max-w-7xl mx-auto px-4 py-10 grid grid-cols-1 md:grid-cols-3 gap-8">
 
-        {/* Brand */}
+        
         <div>
           <h2 className="text-2xl font-bold text-white mb-2">
             💡 IdeaVault
@@ -15,7 +15,6 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Links */}
         <div>
           <h3 className="text-white font-semibold mb-3">Platform</h3>
           <ul className="space-y-2 text-sm">
@@ -25,25 +24,18 @@ export default function Footer() {
           </ul>
         </div>
 
-        {/* Contact */}
         <div>
           <h3 className="text-white font-semibold mb-3">Contact</h3>
 
           <ul className="space-y-3 text-sm">
-
-            {/* Email */}
             <li className="flex items-center gap-2">
               <FaEnvelope className="text-gray-400" />
               ideavault@gmail.com
             </li>
-
-            {/* Location */}
             <li className="flex items-center gap-2">
               <FaMapMarkerAlt className="text-gray-400" />
               Dhaka, Bangladesh
             </li>
-
-            {/* Social Icons */}
             <li className="flex gap-4 mt-2 items-center">
 
               <a href="#" target="_blank">
