@@ -49,18 +49,6 @@ export default function ProfilePage() {
 
           <div className="bg-white rounded-3xl shadow-lg p-8">
             {/* Avatar */}
-            {/* <div className="flex justify-center mb-8">
-              <div className="relative">
-                <img referrerPolicy="no-referrer"
-                  src={formData.photoURL && formData.photoURL.startsWith("http")
-                    ? formData.photoURL
-                    : `https://ui-avatars.com/api/?name=${user?.name}&background=7c3aed&color=fff&size=128`
-                  }
-                  alt="profile"
-                  className="w-28 h-28 rounded-full object-cover border-4 border-purple-200"
-                />
-              </div>
-            </div> */}
             <div className="flex justify-center mb-8">
               <div className="relative">
                 <div

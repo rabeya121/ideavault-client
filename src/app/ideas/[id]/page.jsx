@@ -54,12 +54,12 @@ export default function IdeaDetailsPage() {
       return;
     }
     try {
-      const token = await getToken(); // ← token নাও
+      const token = await getToken(); 
       await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comments`,
         { ideaId: id, userEmail: user.email, userName: user.name, text: commentText },
         {
-          headers: { Authorization: `Bearer ${token}` }, // ← add করো
+          headers: { Authorization: `Bearer ${token}` }, 
           withCredentials: true
         }
       );
@@ -73,11 +73,11 @@ export default function IdeaDetailsPage() {
 
   const handleDeleteComment = async (commentId) => {
     try {
-      const token = await getToken(); // ← token নাও
+      const token = await getToken(); 
       await axios.delete(
         `${process.env.NEXT_PUBLIC_SERVER_URL}/api/comments/${commentId}`,
         {
-          headers: { Authorization: `Bearer ${token}` }, // ← add করো
+          headers: { Authorization: `Bearer ${token}` }, 
           withCredentials: true
         }
       );
@@ -90,12 +90,12 @@ export default function IdeaDetailsPage() {
 
   const handleEditComment = async (commentId) => {
     try {
-      const token = await getToken(); // ← token নাও
+      const token = await getToken(); 
       await axios.put(
         `/api/comments/${commentId}`,
         { text: editText },
         {
-          headers: { Authorization: `Bearer ${token}` }, // ← add করো
+          headers: { Authorization: `Bearer ${token}` }, 
           withCredentials: true
         }
       );
@@ -269,7 +269,7 @@ export default function IdeaDetailsPage() {
                       )}
                     </div>
 
-                    {/* Edit/Delete - only own comments */}
+                    {/* Edit/Delete - comments */}
                     {user?.email === comment.userEmail && editingComment !== comment._id && (
                       <div className="flex gap-2 flex-shrink-0">
                         <button

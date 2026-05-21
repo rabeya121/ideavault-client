@@ -179,7 +179,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Extra Section 1 - How It Works */}
+      {/* How It Works */}
       <section className="bg-white py-16 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-10">
