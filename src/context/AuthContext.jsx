@@ -37,7 +37,7 @@ export function AuthProvider({ children }) {
             setUser(res.data.user);
           }
         } catch (err) {
-          // BetterAuth session নেই, ignore করো
+          
           console.log("No session found");
         } finally {
           setLoading(false);
