@@ -15,11 +15,12 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const initAuth = async () => {
       try {
-        
-        const res = await axios.get(`${API}/auth/me`, { withCredentials: true });
+        const res = await axios.get(`${API}/auth/me`, {
+          withCredentials: true,
+        });
         setUser(res.data);
+        setLoading(false);
       } catch {
-        
         try {
           const session = await authClient.getSession();
           if (session?.data?.user) {
@@ -31,22 +32,16 @@ export function AuthProvider({ children }) {
                 email: betterUser.email,
                 photoURL: betterUser.image,
               },
-              { withCredentials: true }
+              { withCredentials: true },
             );
             setUser(res.data.user);
-
-            // localStorage থেকে redirect নাও
-            const savedRedirect = localStorage.getItem("redirectAfterLogin");
-            if (savedRedirect) {
-              localStorage.removeItem("redirectAfterLogin");
-              window.location.href = savedRedirect;
-            }
           }
         } catch (err) {
-          console.error(err);
+          // BetterAuth session নেই, ignore করো
+          console.log("No session found");
+        } finally {
+          setLoading(false);
         }
-      } finally {
-        setLoading(false);
       }
     };
     initAuth();
@@ -57,7 +52,7 @@ export function AuthProvider({ children }) {
     const res = await axios.post(
       `${API}/auth/register`,
       { name, email, password, photoURL },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     setUser(res.data.user);
     return res.data;
@@ -68,7 +63,7 @@ export function AuthProvider({ children }) {
     const res = await axios.post(
       `${API}/auth/login`,
       { email, password },
-      { withCredentials: true }
+      { withCredentials: true },
     );
     setUser(res.data.user);
     return res.data;
@@ -76,11 +71,9 @@ export function AuthProvider({ children }) {
 
   // Google Login
   const googleLogin = async (userData) => {
-    const res = await axios.post(
-      `${API}/auth/google-login`,
-      userData,
-      { withCredentials: true }
-    );
+    const res = await axios.post(`${API}/auth/google-login`, userData, {
+      withCredentials: true,
+    });
     setUser(res.data.user);
     return res.data;
   };
@@ -103,7 +96,16 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, setUser, loading, register, login, googleLogin, logout, getToken }}
+      value={{
+        user,
+        setUser,
+        loading,
+        register,
+        login,
+        googleLogin,
+        logout,
+        getToken,
+      }}
     >
       {children}
     </AuthContext.Provider>
