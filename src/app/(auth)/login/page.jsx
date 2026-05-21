@@ -284,8 +284,6 @@ function LoginContent() {
         </div>
 
         <form autoComplete="off" onSubmit={handleSubmit} className="space-y-4">
-
-          {/* Email */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Email</label>
             <div className="relative">
@@ -302,7 +300,7 @@ function LoginContent() {
             </div>
           </div>
 
-          {/* Password */}
+          {/* Pass*/}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Password</label>
             <div className="relative">
@@ -326,7 +324,7 @@ function LoginContent() {
             </div>
           </div>
 
-          {/* Forgot Password */}
+          {/* Forgot Pass */}
           <div className="text-right">
             <button type="button" className="text-sm text-purple-500 hover:underline">
               Forgot Password?
@@ -344,7 +342,6 @@ function LoginContent() {
             ) : "Login"}
           </button>
 
-          {/* Divider */}
           <div className="relative my-2">
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-200 dark:border-gray-600"></div>
