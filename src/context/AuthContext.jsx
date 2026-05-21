@@ -12,20 +12,44 @@ export function AuthProvider({ children }) {
 
   const API = `${process.env.NEXT_PUBLIC_SERVER_URL}/api`;
 
-
-  // Check if user is logged in
   useEffect(() => {
-    axios
-      .get(`${API}/auth/me`, { withCredentials: true })
-      .then((res) => {
+    const initAuth = async () => {
+      try {
+        
+        const res = await axios.get(`${API}/auth/me`, { withCredentials: true });
         setUser(res.data);
-      })
-      .catch(() => {
-        setUser(null);
-      })
-      .finally(() => {
+      } catch {
+        
+        try {
+          const session = await authClient.getSession();
+          if (session?.data?.user) {
+            const betterUser = session.data.user;
+            const res = await axios.post(
+              `${API}/auth/google-login`,
+              {
+                name: betterUser.name,
+                email: betterUser.email,
+                photoURL: betterUser.image,
+              },
+              { withCredentials: true }
+            );
+            setUser(res.data.user);
+
+            // localStorage থেকে redirect নাও
+            const savedRedirect = localStorage.getItem("redirectAfterLogin");
+            if (savedRedirect) {
+              localStorage.removeItem("redirectAfterLogin");
+              window.location.href = savedRedirect;
+            }
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      } finally {
         setLoading(false);
-      });
+      }
+    };
+    initAuth();
   }, []);
 
   // Register
@@ -33,7 +57,7 @@ export function AuthProvider({ children }) {
     const res = await axios.post(
       `${API}/auth/register`,
       { name, email, password, photoURL },
-      { withCredentials: true },
+      { withCredentials: true }
     );
     setUser(res.data.user);
     return res.data;
@@ -44,7 +68,7 @@ export function AuthProvider({ children }) {
     const res = await axios.post(
       `${API}/auth/login`,
       { email, password },
-      { withCredentials: true },
+      { withCredentials: true }
     );
     setUser(res.data.user);
     return res.data;
@@ -52,9 +76,11 @@ export function AuthProvider({ children }) {
 
   // Google Login
   const googleLogin = async (userData) => {
-    const res = await axios.post(`${API}/auth/google-login`, userData, {
-      withCredentials: true,
-    });
+    const res = await axios.post(
+      `${API}/auth/google-login`,
+      userData,
+      { withCredentials: true }
+    );
     setUser(res.data.user);
     return res.data;
   };
@@ -62,10 +88,11 @@ export function AuthProvider({ children }) {
   // Logout
   const logout = async () => {
     await axios.post(`${API}/auth/logout`, {}, { withCredentials: true });
+    await authClient.signOut().catch(() => {});
     setUser(null);
   };
 
-    const getToken = async () => {
+  const getToken = async () => {
     try {
       const session = await authClient.getSession();
       return session?.data?.token || null;
@@ -73,6 +100,7 @@ export function AuthProvider({ children }) {
       return null;
     }
   };
+
   return (
     <AuthContext.Provider
       value={{ user, setUser, loading, register, login, googleLogin, logout, getToken }}
