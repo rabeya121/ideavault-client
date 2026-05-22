@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import Link from "next/link";
 import LoadingSpinner from "@/components/LoadingSpinner";
-import { FaSearch, FaFilter, FaEye, FaUser, FaClock } from "react-icons/fa";
+import { FaSearch, FaFilter, FaEye, FaUser, FaClock, FaHeart} from "react-icons/fa";
 import useTitle from "@/hook/useTitle";
 
 const categories = [
@@ -199,6 +199,9 @@ function IdeaCard({ idea }) {
           </span>
           <span className="flex items-center gap-1">
             <FaEye /> {idea.views} views
+          </span>
+          <span className="flex items-center gap-1">
+            <FaHeart /> {idea.likes || 0}
           </span>
           <span className="flex items-center gap-1">
             <FaClock /> {new Date(idea.createdAt).toLocaleDateString()}
